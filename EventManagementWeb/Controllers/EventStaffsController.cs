@@ -22,7 +22,7 @@ namespace EventManagementWeb.Controllers
         // GET: EventStaffs
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.EventStaff.Include(e => e.Event).Include(e => e.Staff);
+            var applicationDbContext = _context.EventStaff.Where(e => e.Deleted > DateTime.Now).Include(e => e.Event).Include(e => e.Staff);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -155,7 +155,8 @@ namespace EventManagementWeb.Controllers
             var eventStaff = await _context.EventStaff.FindAsync(id);
             if (eventStaff != null)
             {
-                _context.EventStaff.Remove(eventStaff);
+                eventStaff.Deleted = DateTime.Now;
+                _context.EventStaff.Update(eventStaff);
             }
 
             await _context.SaveChangesAsync();

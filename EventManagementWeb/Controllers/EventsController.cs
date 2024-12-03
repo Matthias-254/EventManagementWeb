@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace EventManagementWeb.Controllers
 {
@@ -20,9 +21,18 @@ namespace EventManagementWeb.Controllers
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string name = "", string description = "", int location = 1)
         {
-            var applicationDbContext = _context.Events.Include(e => e.Location).Include(e => e.StartedBy);
+            var applicationDbContext = _context.Events.Include(e => e.Location)
+                                        .Where(e => e.Deleted > DateTime.Now
+                                                && (name == "" || e.Name.Contains(name))
+                                                && (description == "" || e.Description.Contains(description))
+                                                && (location == 1 || e.LocationId == location))
+                                        .OrderBy(e => e.Name)
+                                        .Include(e => e.StartedBy);
+            ViewBag.Name = name;
+            ViewBag.Description = description;
+            ViewBag.Locations = new SelectList(_context.Locations, "Id", "Name", location);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -51,7 +61,7 @@ namespace EventManagementWeb.Controllers
         {
             ViewData["LocationId"] = new SelectList(_context.Locations, "Id", "Address");
             ViewData["StartedById"] = new SelectList(_context.EventManagementUsers, "Id", "Id");
-            return View();
+            return View(new Event());
         }
 
         // POST: Events/Create
@@ -155,7 +165,8 @@ namespace EventManagementWeb.Controllers
             var @event = await _context.Events.FindAsync(id);
             if (@event != null)
             {
-                _context.Events.Remove(@event);
+                @event.Deleted = DateTime.Now;
+                _context.Events.Update(@event);
             }
 
             await _context.SaveChangesAsync();

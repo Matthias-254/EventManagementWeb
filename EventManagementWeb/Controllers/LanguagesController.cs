@@ -10,96 +10,85 @@ using EventManagementWeb.Models;
 
 namespace EventManagementWeb.Controllers
 {
-    public class LocationsController : Controller
+    public class LanguagesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public LocationsController(ApplicationDbContext context)
+        public LanguagesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Locations
-        public async Task<IActionResult> Index(string name = "", string address = "", string description = "")
+        // GET: Languages
+        public async Task<IActionResult> Index()
         {
-
-            var applicationDbContext = _context.Locations
-                .Where(l => l.Deleted > DateTime.Now
-                        && (name == "" || l.Name.Contains(name))
-                        && (address == "" || l.Address.Contains(address))
-                        && (description == "" || l.Description.Contains(description)))
-                .OrderBy(l => l.Name);
-
-            ViewBag.Name = name;
-            ViewBag.Address = address;
-            ViewBag.Description = description;
-            return View(await applicationDbContext.ToListAsync());
+            return View(await _context.Languages.ToListAsync());
         }
 
-        // GET: Locations/Details/5
-        public async Task<IActionResult> Details(int? id)
+        // GET: Languages/Details/5
+        public async Task<IActionResult> Details(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var location = await _context.Locations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (location == null)
+            var language = await _context.Languages
+                .FirstOrDefaultAsync(m => m.Code == id);
+            if (language == null)
             {
                 return NotFound();
             }
 
-            return View(location);
+            return View(language);
         }
 
-        // GET: Locations/Create
+        // GET: Languages/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Locations/Create
+        // POST: Languages/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Address,Description,Deleted")] Location location)
+        public async Task<IActionResult> Create([Bind("Code,Name,IsSystemLanguage")] Language language)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(location);
+                _context.Add(language);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(location);
+            return View(language);
         }
 
-        // GET: Locations/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Languages/Edit/5
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var location = await _context.Locations.FindAsync(id);
-            if (location == null)
+            var language = await _context.Languages.FindAsync(id);
+            if (language == null)
             {
                 return NotFound();
             }
-            return View(location);
+            return View(language);
         }
 
-        // POST: Locations/Edit/5
+        // POST: Languages/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Address,Description,Deleted")] Location location)
+        public async Task<IActionResult> Edit(string id, [Bind("Code,Name,IsSystemLanguage")] Language language)
         {
-            if (id != location.Id)
+            if (id != language.Code)
             {
                 return NotFound();
             }
@@ -108,12 +97,12 @@ namespace EventManagementWeb.Controllers
             {
                 try
                 {
-                    _context.Update(location);
+                    _context.Update(language);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!LocationExists(location.Id))
+                    if (!LanguageExists(language.Code))
                     {
                         return NotFound();
                     }
@@ -124,46 +113,45 @@ namespace EventManagementWeb.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(location);
+            return View(language);
         }
 
-        // GET: Locations/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        // GET: Languages/Delete/5
+        public async Task<IActionResult> Delete(string id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var location = await _context.Locations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (location == null)
+            var language = await _context.Languages
+                .FirstOrDefaultAsync(m => m.Code == id);
+            if (language == null)
             {
                 return NotFound();
             }
 
-            return View(location);
+            return View(language);
         }
 
-        // POST: Locations/Delete/5
+        // POST: Languages/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            var location = await _context.Locations.FindAsync(id);
-            if (location != null)
+            var language = await _context.Languages.FindAsync(id);
+            if (language != null)
             {
-                location.Deleted = DateTime.Now;
-                _context.Locations.Update(location);
+                _context.Languages.Remove(language);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool LocationExists(int id)
+        private bool LanguageExists(string id)
         {
-            return _context.Locations.Any(e => e.Id == id);
+            return _context.Languages.Any(e => e.Code == id);
         }
     }
 }

@@ -2,6 +2,7 @@ using EventManagementWeb.Data;
 using EventManagementWeb.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -18,7 +19,14 @@ builder.Services.AddDefaultIdentity<EventManagementUser>(options => options.Sign
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+//Restfull API
 builder.Services.AddControllers();
+
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+
+builder.Services.AddMvc()
+    .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix) //language identifier suffix.
+    .AddDataAnnotationsLocalization();  // Auto translate data annotations.
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -47,6 +55,12 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<EventManagementUser>>();
     SeedDataContext.Initialize(context, userManager);
 }
+
+var supportedCultures = new[] { "en", "fr", "nl" };
+var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+app.UseRequestLocalization(localizationOptions);
 
 app.UseStaticFiles();
 

@@ -14,10 +14,24 @@ namespace EventManagementWeb.Data
             EventManagementUser dummyUser = null;
             EventManagementUser testUser = null;
 
+            if(!context.Languages.Any())
+            {
+                context.Languages.AddRange(
+                    new Language(),
+                    new Language { Code = "en", IsSystemLanguage = true, Name = "English" },
+                    new Language { Code = "nl", IsSystemLanguage = true, Name = "Nederlands" },
+                    new Language { Code = "fr", IsSystemLanguage = true, Name = "Français" },
+                    new Language { Code = "de", IsSystemLanguage = false, Name = "Deutsch" }
+                    );
+                context.SaveChanges();
+            }
+
+            Language.Languages = context.Languages.Where(l => l.IsSystemLanguage && l.Code != "?").ToList();
+
             if (context.Users.FirstOrDefault(u => u.Id == "?") == null)
             {
-                dummyUser = new EventManagementUser { Id = "?", UserName = "?", FirstName = "?", LastName = "?", Email = "?@?", PasswordHash = "?", LockoutEnabled = true };
-                testUser = new EventManagementUser { UserName = "Test", FirstName = "Test", LastName = "Test", Email = "Test@Test.be" };
+                dummyUser = new EventManagementUser { Id = "?", UserName = "?", FirstName = "?", LastName = "?", Email = "?@?", PasswordHash = "?", LockoutEnabled = true, LanguageCode = "?" };
+                testUser = new EventManagementUser { UserName = "Test", FirstName = "Test", LastName = "Test", Email = "Test@Test.be", LanguageCode = "?" };
                 context.Users.Add(dummyUser);
                 context.SaveChanges();
                 var result = await userManager.CreateAsync(testUser, "Xxx!12345");

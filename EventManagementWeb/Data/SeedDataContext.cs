@@ -28,7 +28,7 @@ namespace EventManagementWeb.Data
 
             Language.Languages = context.Languages.Where(l => l.IsSystemLanguage && l.Code != "?").ToList();
 
-            if (context.Users.FirstOrDefault(u => u.Id == "?") == null)
+            if(context.Users.FirstOrDefault(u => u.Id == "?") == null)
             {
                 dummyUser = new EventManagementUser { Id = "?", UserName = "?", FirstName = "?", LastName = "?", Email = "?@?", PasswordHash = "?", LockoutEnabled = true, LanguageCode = "?" };
                 testUser = new EventManagementUser { UserName = "Test", FirstName = "Test", LastName = "Test", Email = "Test@Test.be", LanguageCode = "?" };
@@ -39,6 +39,7 @@ namespace EventManagementWeb.Data
 
             dummyUser = context.Users.FirstOrDefault(u => u.UserName == "?");
             testUser = context.Users.FirstOrDefault(u => u.UserName == "Test");
+            
 
             if (!context.Roles.Any())
             {

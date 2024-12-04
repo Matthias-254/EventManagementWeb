@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Localization;
 
 namespace EventManagementWeb.Controllers
 {
@@ -152,6 +154,16 @@ namespace EventManagementWeb.Controllers
         private bool LanguageExists(string id)
         {
             return _context.Languages.Any(e => e.Code == id);
+        }
+
+        [AllowAnonymous]
+        public IActionResult ChangeLanguage(string code, string returnUrl)
+        {
+            Response.Cookies.Append(
+                CookieRequestCultureProvider.DefaultCookieName,
+                CookieRequestCultureProvider.MakeCookieValue(new RequestCulture(code)),
+                new CookieOptions { Expires = DateTimeOffset.UtcNow.AddYears(1) });
+            return LocalRedirect(returnUrl);
         }
     }
 }

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventManagementWeb.Controllers
 {
+    [Authorize(Roles = "UserAdmin")]
     public class LocationsController : Controller
     {
         private readonly ApplicationDbContext _context;

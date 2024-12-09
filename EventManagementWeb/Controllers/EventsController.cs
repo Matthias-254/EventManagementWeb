@@ -8,16 +8,19 @@ using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using EventManagementWeb.Services;
 
 namespace EventManagementWeb.Controllers
 {
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly EventManagementUser _user;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(ApplicationDbContext context, IMyUser user)
         {
             _context = context;
+            _user = user.User;
         }
 
         // GET: Events

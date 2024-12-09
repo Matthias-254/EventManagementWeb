@@ -1,5 +1,6 @@
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
+using EventManagementWeb.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -32,6 +33,8 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "EventManagementWeb", Version = "v1" });
 });
+
+builder.Services.AddTransient<IMyUser, MyUser>();
 
 var app = builder.Build();
 

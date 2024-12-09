@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Localization;
 
 namespace EventManagementWeb.Controllers
 {
+    [Authorize(Roles = "UserAdmin")]
     public class LanguagesController : Controller
     {
         private readonly ApplicationDbContext _context;

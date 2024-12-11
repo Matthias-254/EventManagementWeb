@@ -5,5 +5,7 @@ namespace EventManagementWeb.Data
     public static class Globals
     {
         public static EventManagementUser DefaultUser;
+
+        public static WebApplication App;
     }
 }

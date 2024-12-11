@@ -17,6 +17,6 @@ namespace EventManagementWeb.Data
         public DbSet<EventManagementWeb.Models.EventManagementUser> EventManagementUsers { get; set; }
         public DbSet<EventManagementWeb.Models.EventStaff> EventStaff { get; set; } = default!;
         public DbSet<EventManagementWeb.Models.Language> Languages { get; set; } = default!;
-        // public DbSet<EventManagementWeb.ViewModels.UserViewModel> UserViewModel { get; set; } = default!;
+        public DbSet<EventManagementWeb.Models.Parameter> Parameters { get; set; } = default!;
     }
 }

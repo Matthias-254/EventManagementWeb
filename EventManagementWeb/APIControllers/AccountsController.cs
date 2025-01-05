@@ -16,9 +16,9 @@ namespace EventManagementWeb.APIControllers
             _signInManager = signInManager;
         }
 
-        [HttpPost]
-        [Route("/api/login")]
-        public async Task<ActionResult<Boolean>> PostAccount([FromBody] LoginModel @login)
+        [HttpPut]
+        //[Route("/api/login")]
+        public async Task<ActionResult<Boolean>> Login([FromBody] LoginModel login)
         {
             var result = await _signInManager.PasswordSignInAsync(login.Name, login.Password, true, lockoutOnFailure: false);
 

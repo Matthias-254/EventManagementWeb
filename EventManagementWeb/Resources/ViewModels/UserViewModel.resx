@@ -117,22 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Description" xml:space="preserve">
-    <value>Beschrijving</value>
+  <data name="Blocked?" xml:space="preserve">
+    <value>Blocked?</value>
   </data>
-  <data name="Location" xml:space="preserve">
-    <value>Locatie</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Naam</value>
+    <value>Name</value>
   </data>
-  <data name="Started" xml:space="preserve">
-    <value>Gestart</value>
+  <data name="Roles" xml:space="preserve">
+    <value>Roles</value>
   </data>
-  <data name="Started by" xml:space="preserve">
-    <value>Opgestart door</value>
+  <data name="User Id" xml:space="preserve">
+    <value>User Id</value>
   </data>
-  <data name="Will end" xml:space="preserve">
-    <value>Zal eindigen op</value>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
   </data>
 </root>

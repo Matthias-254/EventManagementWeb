@@ -129,7 +129,10 @@
   <data name="Started" xml:space="preserve">
     <value>Démarer</value>
   </data>
+  <data name="Started by" xml:space="preserve">
+    <value>commencé par</value>
+  </data>
   <data name="Will end" xml:space="preserve">
-    <value>Finir</value>
+    <value>terminée à</value>
   </data>
 </root>

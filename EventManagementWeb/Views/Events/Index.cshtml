@@ -27,9 +27,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.StartedBy)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Deleted)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Location)
             </th>
@@ -43,7 +43,6 @@
             <th>
                 <input name="description" value="@ViewBag.Description" onchange="this.form.submit()" />
             </th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -71,9 +70,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartedBy.Id)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Location.Address)
             </td>

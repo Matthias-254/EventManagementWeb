@@ -23,6 +23,7 @@ namespace EventManagementWeb.Models
         [ForeignKey("EventManagementUser")]
         public string UserId { get; set; }
 
+        [Display(Name = "Last Changed")]
         public DateTime LastChanged { get; set; } = DateTime.Now;
 
         public DateTime Obsolete { get; set; } = DateTime.MaxValue;

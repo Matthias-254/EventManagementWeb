@@ -31,6 +31,7 @@ namespace EventManagementWeb.Models
         [ForeignKey("EventManagementUser")]
         public string? StartedById { get; set; } = "?";
 
+        [Display(Name = "Started by")]
         public EventManagementUser? StartedBy { get; set; }
 
         public DateTime Deleted { get; set; } = DateTime.MaxValue;

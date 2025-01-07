@@ -129,6 +129,9 @@
   <data name="Started" xml:space="preserve">
     <value>Started</value>
   </data>
+  <data name="Started by" xml:space="preserve">
+    <value>Started by</value>
+  </data>
   <data name="Will end" xml:space="preserve">
     <value>Will end</value>
   </data>

@@ -118,21 +118,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Description" xml:space="preserve">
-    <value>Beschrijving</value>
+    <value>Description</value>
   </data>
-  <data name="Location" xml:space="preserve">
-    <value>Locatie</value>
+  <data name="Last Changed" xml:space="preserve">
+    <value>Dernière modification</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Naam</value>
+    <value>Nom</value>
   </data>
-  <data name="Started" xml:space="preserve">
-    <value>Gestart</value>
-  </data>
-  <data name="Started by" xml:space="preserve">
-    <value>Opgestart door</value>
-  </data>
-  <data name="Will end" xml:space="preserve">
-    <value>Zal eindigen op</value>
+  <data name="Value" xml:space="preserve">
+    <value>Valeur</value>
   </data>
 </root>

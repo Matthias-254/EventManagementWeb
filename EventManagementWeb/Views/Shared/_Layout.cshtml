@@ -26,31 +26,31 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">@_Localizer["Home"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">Events</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Events" asp-action="Index">@_Localizer["Event"]</a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
                         {
                             if (User.IsInRole("UserAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Locations" asp-action="Index">Locations</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Locations" asp-action="Index">@_Localizer["Location"]</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserViewModels" asp-action="Index">Users</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="UserViewModels" asp-action="Index">@_Localizer["User"]</a>
                                 </li>
                             }
                             if (User.IsInRole("SystemAdmin"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Parameters" asp-action="Index">Parameters</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Parameters" asp-action="Index">@_Localizer["Parameter"]</a>
                                 </li>
                             }
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">@_Localizer["Privacy"]</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />

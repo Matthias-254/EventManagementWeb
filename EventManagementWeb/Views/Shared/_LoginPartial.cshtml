@@ -1,7 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Microsoft.AspNetCore.Localization
 @using EventManagementWeb.Services
+@using Microsoft.AspNetCore.Mvc.Localization
 
+@inject IViewLocalizer _Localizer
 @inject SignInManager<EventManagementUser> SignInManager
 @inject UserManager<EventManagementUser> UserManager
 @inject IMyUser user
@@ -47,17 +49,17 @@
     </li>
     <li class="nav-item">
         <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            <button  type="submit" class="nav-link btn btn-link text-dark">@_Localizer["Logout"]</button>
         </form>
     </li>
 }
 else
 {
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">@_Localizer["Register"]</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">@_Localizer["Login"]</a>
     </li>
 }
 </ul>

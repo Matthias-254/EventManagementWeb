@@ -14,14 +14,21 @@ namespace EventManagementWeb.Services
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext)
+        public async Task Invoke(HttpContext httpContext)
         {
+            if (httpContext.Request.Cookies.TryGetValue("UserPreference", out var userPreference))
+            {
+                httpContext.Items["UserPreference"] = userPreference;
+            }
+            else
+            {
+                httpContext.Items["UserPreference"] = "DefaultPreference";
+            }
 
-            return _next(httpContext);
+            await _next(httpContext);
         }
     }
 
-    // Extension method used to add the middleware to the HTTP request pipeline.
     public static class MyMiddleWareExtensions
     {
         public static IApplicationBuilder UseMyMiddleWare(this IApplicationBuilder builder)

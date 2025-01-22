@@ -1,4 +1,4 @@
-﻿using EventManagementMobile;
+using EventManagementMobile;
 using EventManagementMobile.Services;
 using Microsoft.Maui.Controls;
 using EventManagementMobile.Models;
@@ -32,7 +32,7 @@ namespace EventManagementMobile
             {
                 using (var db = new LocalDatabase())
                 {
-                    db.Users.Add(new User { Username = username, Password = password }); 
+                    db.Users.Add(new User { Username = username, Password = password });
                     db.SaveChanges();
                 }
 
@@ -46,4 +46,3 @@ namespace EventManagementMobile
     }
 
 }
-

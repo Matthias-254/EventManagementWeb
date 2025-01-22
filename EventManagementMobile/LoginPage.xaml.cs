@@ -8,7 +8,6 @@ namespace EventManagementMobile
     public partial class LoginPage : ContentPage
     {
         private readonly ApiService _apiService;
-
         public LoginPage(ApiService apiService)
         {
             InitializeComponent();

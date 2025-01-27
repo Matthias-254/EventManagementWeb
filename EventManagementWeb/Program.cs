@@ -56,9 +56,9 @@ builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
     {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
+        policy.WithOrigins("http://10.0.2.2:5173") // Emulatoradres
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
@@ -121,4 +121,4 @@ app.UseEndpoints(endpoints =>
     endpoints.MapControllers();
 });
 
-app.Run();
+app.Run("http://0.0.0.0:5173");

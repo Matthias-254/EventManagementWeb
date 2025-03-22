@@ -8,32 +8,47 @@ using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using EventManagementWeb.Services;
 
 namespace EventManagementWeb.Controllers
 {
     public class EventsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly EventManagementUser _user;
 
-        public EventsController(ApplicationDbContext context)
+        public EventsController(ApplicationDbContext context, IMyUser user)
         {
             _context = context;
+            _user = user.User;
         }
 
         // GET: Events
         public async Task<IActionResult> Index(string name = "", string description = "", int location = 1)
         {
-            var applicationDbContext = _context.Events.Include(e => e.Location)
-                                        .Where(e => e.Deleted > DateTime.Now
-                                                && (name == "" || e.Name.Contains(name))
-                                                && (description == "" || e.Description.Contains(description))
-                                                && (location == 1 || e.LocationId == location))
-                                        .OrderBy(e => e.Name)
-                                        .Include(e => e.StartedBy);
-            ViewBag.Name = name;
-            ViewBag.Description = description;
-            ViewBag.Locations = new SelectList(_context.Locations, "Id", "Name", location);
-            return View(await applicationDbContext.ToListAsync());
+            try
+            {
+                var applicationDbContext = _context.Events.Include(e => e.Location)
+                                            .Where(e => e.Deleted > DateTime.Now
+                                                    && (string.IsNullOrEmpty(name) || e.Name.Contains(name))
+                                                    && (string.IsNullOrEmpty(description) || e.Description.Contains(description))
+                                                    && (location == 1 || e.LocationId == location))
+                                            .OrderBy(e => e.Name)
+                                            .Include(e => e.StartedBy);
+
+                ViewBag.Name = name;
+                ViewBag.Description = description;
+                ViewBag.Locations = new SelectList(_context.Locations, "Id", "Name", location);
+
+                return View(await applicationDbContext.ToListAsync());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fout opgetreden: {ex.Message}");
+
+                ViewBag.ErrorMessage = "Er is een fout opgetreden bij het ophalen van de evenementen.";
+                return View(Enumerable.Empty<Event>().ToList());
+            }
         }
 
         // GET: Events/Details/5

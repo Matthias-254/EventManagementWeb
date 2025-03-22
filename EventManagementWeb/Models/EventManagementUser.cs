@@ -16,5 +16,10 @@ namespace EventManagementWeb.Models
         [StringLength(2)]
         [ForeignKey("Languages")]
         public string LanguageCode { get; set; } = "?";
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Models;
+using EventManagementWeb.ViewModels;
 
 namespace EventManagementWeb.Data
 {
@@ -16,5 +17,6 @@ namespace EventManagementWeb.Data
         public DbSet<EventManagementWeb.Models.EventManagementUser> EventManagementUsers { get; set; }
         public DbSet<EventManagementWeb.Models.EventStaff> EventStaff { get; set; } = default!;
         public DbSet<EventManagementWeb.Models.Language> Languages { get; set; } = default!;
+        public DbSet<EventManagementWeb.Models.Parameter> Parameters { get; set; } = default!;
     }
 }

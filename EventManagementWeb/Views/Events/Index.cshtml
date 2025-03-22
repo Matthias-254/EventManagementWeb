@@ -6,9 +6,19 @@
 
 <h1>Index</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+@if (ViewBag.ErrorMessage != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.ErrorMessage
+    </div>
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -27,9 +37,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.StartedBy)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Deleted)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Location)
             </th>
@@ -43,7 +53,6 @@
             <th>
                 <input name="description" value="@ViewBag.Description" onchange="this.form.submit()" />
             </th>
-            <th></th>
             <th></th>
             <th></th>
             <th></th>
@@ -71,9 +80,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.StartedBy.Id)
             </td>
-            <td>
+            @* <td>
                 @Html.DisplayFor(modelItem => item.Deleted)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Location.Address)
             </td>

@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using EventManagementWeb.Data;
 using EventManagementWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace EventManagementWeb.Controllers
 {
+    [Authorize(Roles = "UserAdmin")]
     public class LocationsController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,19 +24,37 @@ namespace EventManagementWeb.Controllers
         // GET: Locations
         public async Task<IActionResult> Index(string name = "", string address = "", string description = "")
         {
+            try
+            {
+                var applicationDbContext = _context.Locations
+                    .Where(l => l.Deleted > DateTime.Now
+                            && (string.IsNullOrEmpty(name) || l.Name.Contains(name))
+                            && (string.IsNullOrEmpty(address) || l.Address.Contains(address))
+                            && (string.IsNullOrEmpty(description) || l.Description.Contains(description)))
+                    .OrderBy(l => l.Name);
 
-            var applicationDbContext = _context.Locations
-                .Where(l => l.Deleted > DateTime.Now
-                        && (name == "" || l.Name.Contains(name))
-                        && (address == "" || l.Address.Contains(address))
-                        && (description == "" || l.Description.Contains(description)))
-                .OrderBy(l => l.Name);
+                ViewBag.Name = name;
+                ViewBag.Address = address;
+                ViewBag.Description = description;
 
-            ViewBag.Name = name;
-            ViewBag.Address = address;
-            ViewBag.Description = description;
-            return View(await applicationDbContext.ToListAsync());
+                var locations = await applicationDbContext.ToListAsync();
+
+                if (!locations.Any())
+                {
+                    ViewBag.InfoMessage = "Er zijn momenteel geen locaties beschikbaar.";
+                }
+
+                return View(locations);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Fout opgetreden: {ex.Message}");
+
+                ViewBag.ErrorMessage = "Er is een fout opgetreden bij het ophalen van de locaties. Probeer het later opnieuw.";
+                return View(Enumerable.Empty<Location>().ToList());
+            }
         }
+
 
         // GET: Locations/Details/5
         public async Task<IActionResult> Details(int? id)
